@@ -8,107 +8,107 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background: #f4f4f4;
     }
-     <!-- Top Header -->
-<div style="background:#f9c513; color:#000; text-align:center; padding:12px; font-weight:bold; font-size:18px;">
-  Adani Corporation
-</div>
-
+    /* Top bar */
+    .topbar {
+      background: #f9c513;
+      color: #000;
+      text-align: center;
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+    }
     /* Banner */
     .banner img {
       width: 100%;
       height: auto;
       display: block;
     }
-
     /* Tabs */
     .tabs {
       display: flex;
-      background: #f1f1f1;
+      justify-content: space-around;
+      background: #fff;
+      border-bottom: 2px solid #ddd;
     }
-
-    .tabs button {
+    .tab {
       flex: 1;
-      padding: 15px;
-      border: none;
+      padding: 12px;
+      text-align: center;
       cursor: pointer;
       font-weight: bold;
-      background: #f1f1f1;
     }
-
-    .tabs button.active {
+    .tab.active {
       background: #f9c513;
     }
-
-    /* Cards */
+    /* Card Section */
     .card {
       background: #fff;
       margin: 15px;
       padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-
     .card h3 {
       margin: 0 0 10px;
     }
-
-    .card p {
-      margin: 5px 0;
-    }
-
-    .card button {
+    .invest-btn {
+      display: block;
       width: 100%;
-      padding: 12px;
-      background: #003366;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
+      padding: 10px;
+      background: #002b5c;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 10px;
     }
-
-    /* Bottom Menu */
-    .bottom-menu {
+    /* Bottom Nav */
+    .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background: #f9c513;
       display: flex;
-      justify-content: space-around;
-      padding: 12px 0;
-      font-weight: bold;
+      background: #f9c513;
     }
-
-    .bottom-menu div {
-      cursor: pointer;
+    .bottom-nav a {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <!-- Banner Section -->
+  <!-- Top Yellow Bar -->
+  <div class="topbar">
+    Adani Corporation
+  </div>
+
+  <!-- Banner -->
   <div class="banner">
-    <!-- Replace banner.jpg with the exact name of your uploaded image -->
-    <img src="banner.jpg" alt="Adani Banner">
+    <img src="banner.jpg" alt="Adani Corporation Banner">
   </div>
 
   <!-- Tabs -->
   <div class="tabs">
-    <button class="active">Primary</button>
-    <button>VIP</button>
-    <button>Purchased</button>
+    <div class="tab active">Primary</div>
+    <div class="tab">VIP</div>
+    <div class="tab">Purchased</div>
   </div>
 
-  <!-- Cards -->
+  <!-- Investment Cards -->
   <div class="card">
     <h3>Mahindra Scorpio</h3>
     <p>Day Income: ₹190</p>
     <p>Income Days: 7 days</p>
     <p>Invest Price: ₹300</p>
-    <button>Invest Now</button>
+    <a href="#" class="invest-btn">Invest Now</a>
   </div>
 
   <div class="card">
@@ -116,7 +116,7 @@
     <p>Day Income: ₹90</p>
     <p>Income Days: 30 days</p>
     <p>Invest Price: ₹250</p>
-    <button>Invest Now</button>
+    <a href="#" class="invest-btn">Invest Now</a>
   </div>
 
   <div class="card">
@@ -124,15 +124,15 @@
     <p>Day Income: ₹130</p>
     <p>Income Days: 30 days</p>
     <p>Invest Price: ₹400</p>
-    <button>Invest Now</button>
+    <a href="#" class="invest-btn">Invest Now</a>
   </div>
 
-  <!-- Bottom Menu -->
-  <div class="bottom-menu">
-    <div>Home</div>
-    <div>Recharge</div>
-    <div>Refer</div>
-    <div>Mine</div>
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="#">Home</a>
+    <a href="#">Recharge</a>
+    <a href="#">Refer</a>
+    <a href="#">Mine</a>
   </div>
 
 </body>
