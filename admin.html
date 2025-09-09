@@ -324,12 +324,12 @@
             
             // For demonstration purposes - in a real application, this would be handled by a backend
             if (username === 'admin' && password === 'admin123') {
-                alert('Login successful! Redirecting to admin dashboard...');
-                // In a real application, you would redirect to the admin dashboard
-                // window.location.href = 'admin-dashboard.html';
-            } else {
-                alert('Invalid credentials. Please try again.');
-            }
+    alert('Login successful! Redirecting to admin dashboard...');
+    window.location.href = 'dashboard.html';  // redirect to new page
+   } else {
+    alert('Invalid credentials. Please try again.');
+     }
+
         });
         
         // Add animation to input fields
