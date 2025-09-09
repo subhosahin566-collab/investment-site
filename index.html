@@ -8,88 +8,88 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      .banner img
-      { 
-       width: 100%;
-       height: auto;
-        display: block;
-        
+      background: #f5f5f5;
     }
-    header {
-      background-color: #ffc107;
-      color: #000;
-      text-align: center;
-      padding: 15px;
-      font-size: 22px;
-      font-weight: bold;
+
+    /* Banner */
+    .banner img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
-    <!-- Banner Section -->
-<div class="banner">
-  <img src="banner.jpg" alt="Adani Banner">
-</div>
-    }
+
+    /* Tabs */
     .tabs {
       display: flex;
-      justify-content: space-around;
-      margin: 15px;
+      background: #f1f1f1;
     }
+
     .tabs button {
       flex: 1;
-      padding: 10px;
+      padding: 15px;
       border: none;
-      background: #eee;
       cursor: pointer;
       font-weight: bold;
+      background: #f1f1f1;
     }
+
     .tabs button.active {
-      background: #ffc107;
-      color: #000;
+      background: #f9c513;
     }
+
+    /* Cards */
     .card {
       background: #fff;
       margin: 15px;
       padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
+
     .card h3 {
-      margin: 0;
+      margin: 0 0 10px;
     }
+
     .card p {
       margin: 5px 0;
-      color: #555;
     }
+
     .card button {
       width: 100%;
-      padding: 10px;
-      border: none;
+      padding: 12px;
       background: #003366;
-      color: #fff;
+      color: white;
+      border: none;
       border-radius: 5px;
+      font-weight: bold;
       cursor: pointer;
     }
-    footer {
+
+    /* Bottom Menu */
+    .bottom-menu {
       position: fixed;
       bottom: 0;
+      left: 0;
       width: 100%;
+      background: #f9c513;
       display: flex;
       justify-content: space-around;
-      background: #ffc107;
-      padding: 10px 0;
-    }
-    footer button {
-      border: none;
-      background: none;
+      padding: 12px 0;
       font-weight: bold;
+    }
+
+    .bottom-menu div {
       cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>Adani Corporation</header>
+  <!-- Banner Section -->
+  <div class="banner">
+    <!-- Replace banner.jpg with the exact name of your uploaded image -->
+    <img src="banner.jpg" alt="Adani Banner">
+  </div>
 
   <!-- Tabs -->
   <div class="tabs">
@@ -123,13 +123,13 @@
     <button>Invest Now</button>
   </div>
 
-  <!-- Bottom Navigation -->
-  <footer>
-    <button>Home</button>
-    <button>Recharge</button>
-    <button>Refer</button>
-    <button>Mine</button>
-  </footer>
+  <!-- Bottom Menu -->
+  <div class="bottom-menu">
+    <div>Home</div>
+    <div>Recharge</div>
+    <div>Refer</div>
+    <div>Mine</div>
+  </div>
 
 </body>
 </html>
