@@ -101,37 +101,89 @@
       <img src="logo.png" alt="Company Logo">
     </div>
 
-    <h2>Login</h2>
+    <h2>Login with Phone</h2>
 
-    <form id="loginForm">
-      <div class="input-group">
-        <label for="phone">Account</label>
-        <input type="text" id="phone" placeholder="Mobile phone number" required>
-      </div>
+    <!-- Phone Number Input -->
+    <div class="input-group">
+      <label for="phone">Mobile Number</label>
+      <input type="text" id="phone" placeholder="+91XXXXXXXXXX" required>
+    </div>
 
-      <div class="input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Password" required>
-      </div>
+    <!-- Recaptcha -->
+    <div id="recaptcha-container"></div>
 
-      <button type="submit" class="btn">Login</button>
-    </form>
+    <!-- OTP Buttons -->
+    <button class="btn" onclick="sendOTP()">Send OTP</button>
+
+    <div class="input-group">
+      <label for="otp">Enter OTP</label>
+      <input type="text" id="otp" placeholder="6-digit OTP">
+    </div>
+
+    <button class="btn" onclick="verifyOTP()">Verify OTP</button>
   </div>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const phone = document.getElementById("phone").value;
-      const password = document.getElementById("password").value;
+  <!-- Firebase OTP Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } 
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc, serverTimestamp } 
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      // Demo login check
-      if(phone === "9999999999" && password === "admin123") {
+    // Your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyA2q99EtNf7T0HJ5HQPDVipcy4JIiUXD7A",
+      authDomain: "investment-site-285a4.firebaseapp.com",
+      projectId: "investment-site-285a4",
+      storageBucket: "investment-site-285a4.firebasestorage.app",
+      messagingSenderId: "19188315569",
+      appId: "1:19188315569:web:8547c548146ea86fc43990",
+      measurementId: "G-XKFGPB15GS"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Step 1: Send OTP
+    window.sendOTP = function () {
+      const phoneNumber = document.getElementById("phone").value;
+      const recaptcha = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        size: "normal"
+      });
+      signInWithPhoneNumber(auth, phoneNumber, recaptcha)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          alert("OTP sent!");
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Error sending OTP: " + error.message);
+        });
+    }
+
+    // Step 2: Verify OTP
+    window.verifyOTP = function () {
+      const otp = document.getElementById("otp").value;
+      window.confirmationResult.confirm(otp).then(async (result) => {
+        const user = result.user;
+
+        // Save user to Firestore (if not already)
+        await setDoc(doc(db, "users", user.uid), {
+          phone: user.phoneNumber,
+          role: "user",
+          balance: 0,
+          createdAt: serverTimestamp()
+        });
+
         alert("Login successful!");
         window.location.href = "dashboard.html"; 
-      } else {
-        alert("Invalid phone or password");
-      }
-    });
+      }).catch((error) => {
+        console.error(error);
+        alert("Invalid OTP: " + error.message);
+      });
+    }
   </script>
 
 </body>
