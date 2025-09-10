@@ -81,6 +81,35 @@
       color: #000;
       font-weight: bold;
     }
+    /* Login Section */
+    .login-section {
+      margin: 20px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .login-section input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .login-section button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: #002b5c;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .login-section button:hover {
+      background: #004080;
+    }
   </style>
 </head>
 <body>
@@ -127,13 +156,20 @@
     <a href="#" class="invest-btn">Invest Now</a>
   </div>
 
+  <!-- Login Section -->
+  <div class="login-section">
+    <h2>Login with Phone</h2>
+    <input type="text" id="phoneNumber" placeholder="+91XXXXXXXXXX">
+    <div id="recaptcha-container"></div>
+    <button onclick="sendOTP()">Send OTP</button>
+
+    <input type="text" id="otp" placeholder="Enter OTP">
+    <button onclick="verifyOTP()">Verify OTP</button>
+  </div>
+
   <!-- Bottom Navigation -->
   <div class="bottom-nav">
     <a href="#">Home</a>
     <a href="#">Recharge</a>
     <a href="#">Refer</a>
-    <a href="login.html">Mine</a>
-  </div>
-  <script type="module" src="firebase.js"></script>
-</body>
-</html>
+    <a href=
