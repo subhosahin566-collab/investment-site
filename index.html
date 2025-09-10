@@ -3,92 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adani Corporation</title>
+  <title>Adani Corporation - Investment Site</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f9f9f9;
+      background-color: #f8f9fa;
     }
-    header {
-      background: #FFD700;
+
+    /* Top yellow bar */
+    .top-bar {
+      background-color: #FFD700;
+      color: black;
       padding: 15px;
-      text-align: center;
+      font-size: 18px;
       font-weight: bold;
-      font-size: 20px;
-    }
-   <img src="banner.jpg" alt="Banner" style="width:100%; height:auto;">
-    
-    }
-    .tabs {
-      display: flex;
-      background: #fff;
-      border-bottom: 2px solid #ddd;
-    }
-    .tab {
-      flex: 1;
       text-align: center;
-      padding: 12px;
-      font-weight: bold;
-      cursor: pointer;
     }
-    .tab.active {
-      background: #FFD700;
+
+    /* Banner */
+    .banner {
+      width: 100%;
+      height: auto;
     }
+
+    /* Investment cards */
     .card {
-      background: #fff;
+      background: white;
       margin: 15px;
       padding: 15px;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+
     .card h3 {
       margin: 0 0 10px;
+      color: #333;
     }
-    .btn {
+
+    .card p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .invest-btn {
       display: block;
       width: 100%;
-      padding: 10px;
-      background: #002B5B;
+      padding: 12px;
+      background-color: #002855;
       color: white;
-      text-align: center;
-      text-decoration: none;
-      border-radius: 5px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
       margin-top: 10px;
+      font-size: 16px;
     }
+
+    /* Bottom nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
-      right: 0;
-      background: #FFD700;
+      width: 100%;
+      background-color: #FFD700;
       display: flex;
       justify-content: space-around;
       padding: 10px 0;
-      font-weight: bold;
-      text-align: center;
+      border-top: 1px solid #ccc;
     }
+
     .bottom-nav a {
-      flex: 1;
       text-decoration: none;
       color: black;
+      font-size: 14px;
+      text-align: center;
+      flex: 1;
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Bar -->
-  <header>Adani Corporation</header>
+  <!-- Top bar -->
+  <div class="top-bar">Adani Corporation</div>
 
-  <!-- Banner Section -->
-  <img src="banner.png" alt="Banner" class="banner">
-
-  <!-- Tabs -->
-  <div class="tabs">
-    <div class="tab active">Primary</div>
-    <div class="tab">VIP</div>
-    <div class="tab">Purchased</div>
-  </div>
+  <!-- Banner -->
+  <img src="banner.jpg" alt="Banner" class="banner">
 
   <!-- Investment Plans -->
   <div class="card">
@@ -96,7 +95,7 @@
     <p>Day Income: ₹190</p>
     <p>Income Days: 7 days</p>
     <p>Invest Price: ₹300</p>
-    <a href="#" class="btn">Invest Now</a>
+    <button class="invest-btn">Invest Now</button>
   </div>
 
   <div class="card">
@@ -104,7 +103,7 @@
     <p>Day Income: ₹90</p>
     <p>Income Days: 30 days</p>
     <p>Invest Price: ₹250</p>
-    <a href="#" class="btn">Invest Now</a>
+    <button class="invest-btn">Invest Now</button>
   </div>
 
   <div class="card">
@@ -112,7 +111,7 @@
     <p>Day Income: ₹130</p>
     <p>Income Days: 30 days</p>
     <p>Invest Price: ₹400</p>
-    <a href="#" class="btn">Invest Now</a>
+    <button class="invest-btn">Invest Now</button>
   </div>
 
   <!-- Bottom Navigation -->
