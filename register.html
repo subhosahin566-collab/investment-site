@@ -1,28 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register - Adani Corporation</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #a58500; display: flex; justify-content: center; align-items: center; height: 100vh; }
-    .container { background: #fff; padding: 20px; width: 400px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); text-align: center; }
-    input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #aaa; border-radius: 5px; }
-    .btn { width: 100%; padding: 12px; margin-top: 10px; background: #0b2c56; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
-    .btn:hover { background: #123d72; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #a58500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #0b2c56;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #123d72;
+    }
+    .pe_signin_button {
+      margin-top: 15px;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h2>Register</h2>
-    <input type="text" id="name" placeholder="Full Name" required>
-    <input type="text" id="phone" placeholder="+91XXXXXXXXXX" required>
-    <input type="password" id="password" placeholder="Set Password" required>
+
+    <input type="text" id="name" placeholder="Full Name" required />
+    <input type="text" id="phone" placeholder="+91XXXXXXXXXX" required />
+    <input type="password" id="password" placeholder="Set Password" required />
+
     <div id="recaptcha-container"></div>
+
     <button class="btn" onclick="sendOTP()">Send OTP</button>
-    <input type="text" id="otp" placeholder="Enter OTP">
+    <input type="text" id="otp" placeholder="Enter OTP" />
     <button class="btn" onclick="verifyAndRegister()">Verify & Register</button>
+
+    <div class="pe_signin_button" data-client-id="YOUR_CLIENT_ID"></div>
   </div>
+
+  <script src="https://www.phone.email/sign_in_button_v1.js" async></script>
+
+  <script>
+    function phoneEmailListener(userObj) {
+      const user_json_url = userObj.user_json_url;
+
+      // Send user_json_url to your backend to retrieve verified phone number and user info
+      alert('Phone verified via Phone.Email! user_json_url: ' + user_json_url);
+
+      // TODO: Implement a fetch call to your backend to process user registration based on this user_json_url
+    }
+  </script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -47,22 +101,48 @@
       const phone = document.getElementById("phone").value;
       const userRef = doc(db, "users", phone);
       const userSnap = await getDoc(userRef);
+
       if (userSnap.exists()) {
         alert("This number is already registered. Please login.");
         return;
       }
-      const recaptcha = new RecaptchaVerifier(auth, 'recaptcha-container', { size: "normal" });
+
+      const recaptcha = new RecaptchaVerifier('recaptcha-container', { size: "normal" }, auth);
       signInWithPhoneNumber(auth, phone, recaptcha)
         .then((confirmationResult) => {
           window.confirmationResult = confirmationResult;
-          alert("OTP sent!");
+          alert("OTP sent to your phone!");
         })
-        .catch((error) => { alert("Error: " + error.message); });
-    }
+        .catch((error) => {
+          alert("Error sending OTP: " + error.message);
+        });
+    };
 
     window.verifyAndRegister = async function () {
       const otp = document.getElementById("otp").value;
       const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const password = document.getElementById("password").value;
+
+      window.confirmationResult.confirm(otp).then(async () => {
+        await setDoc(doc(db, "users", phone), {
+          name,
+          phone,
+          password,
+          role: "user",
+          balance: 0,
+          createdAt: serverTimestamp()
+        });
+        alert("Registration successful! Please login.");
+        window.location.href = "login.html";
+      }).catch((error) => {
+        alert("Invalid OTP: " + error.message);
+      });
+    };
+  </script>
+</body>
+
+</html>      const name = document.getElementById("name").value;
       const phone = document.getElementById("phone").value;
       const password = document.getElementById("password").value;
 
