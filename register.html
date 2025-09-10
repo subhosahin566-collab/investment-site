@@ -18,12 +18,9 @@
     <input type="text" id="name" placeholder="Full Name" required>
     <input type="text" id="phone" placeholder="+91XXXXXXXXXX" required>
     <input type="password" id="password" placeholder="Set Password" required>
-    
     <div id="recaptcha-container"></div>
-
     <button class="btn" onclick="sendOTP()">Send OTP</button>
     <input type="text" id="otp" placeholder="Enter OTP">
-
     <button class="btn" onclick="verifyAndRegister()">Verify & Register</button>
   </div>
 
@@ -46,30 +43,23 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Send OTP
     window.sendOTP = async function () {
       const phone = document.getElementById("phone").value;
-
-      // Check if user already exists
       const userRef = doc(db, "users", phone);
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
         alert("This number is already registered. Please login.");
         return;
       }
-
       const recaptcha = new RecaptchaVerifier(auth, 'recaptcha-container', { size: "normal" });
       signInWithPhoneNumber(auth, phone, recaptcha)
         .then((confirmationResult) => {
           window.confirmationResult = confirmationResult;
           alert("OTP sent!");
         })
-        .catch((error) => {
-          alert("Error: " + error.message);
-        });
+        .catch((error) => { alert("Error: " + error.message); });
     }
 
-    // Verify OTP and Save User
     window.verifyAndRegister = async function () {
       const otp = document.getElementById("otp").value;
       const name = document.getElementById("name").value;
@@ -78,19 +68,11 @@
 
       window.confirmationResult.confirm(otp).then(async () => {
         await setDoc(doc(db, "users", phone), {
-          name: name,
-          phone: phone,
-          password: password,
-          role: "user",
-          balance: 0,
-          createdAt: serverTimestamp()
+          name, phone, password, role: "user", balance: 0, createdAt: serverTimestamp()
         });
-
         alert("Registration successful! Please login.");
         window.location.href = "login.html";
-      }).catch((error) => {
-        alert("Invalid OTP: " + error.message);
-      });
+      }).catch((error) => { alert("Invalid OTP: " + error.message); });
     }
   </script>
 </body>
