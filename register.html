@@ -19,7 +19,6 @@
     <input type="text" id="phone" placeholder="+91XXXXXXXXXX" required>
     <input type="password" id="password" placeholder="Set Password" required>
     
-    <!-- Recaptcha -->
     <div id="recaptcha-container"></div>
 
     <button class="btn" onclick="sendOTP()">Send OTP</button>
@@ -33,7 +32,6 @@
     import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyA2q99EtNf7T0HJ5HQPDVipcy4JIiUXD7A",
       authDomain: "investment-site-285a4.firebaseapp.com",
@@ -52,7 +50,7 @@
     window.sendOTP = async function () {
       const phone = document.getElementById("phone").value;
 
-      // Check if already registered
+      // Check if user already exists
       const userRef = doc(db, "users", phone);
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
@@ -62,4 +60,38 @@
 
       const recaptcha = new RecaptchaVerifier(auth, 'recaptcha-container', { size: "normal" });
       signInWithPhoneNumber(auth, phone, recaptcha)
-        .t
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          alert("OTP sent!");
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        });
+    }
+
+    // Verify OTP and Save User
+    window.verifyAndRegister = async function () {
+      const otp = document.getElementById("otp").value;
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const password = document.getElementById("password").value;
+
+      window.confirmationResult.confirm(otp).then(async () => {
+        await setDoc(doc(db, "users", phone), {
+          name: name,
+          phone: phone,
+          password: password,
+          role: "user",
+          balance: 0,
+          createdAt: serverTimestamp()
+        });
+
+        alert("Registration successful! Please login.");
+        window.location.href = "login.html";
+      }).catch((error) => {
+        alert("Invalid OTP: " + error.message);
+      });
+    }
+  </script>
+</body>
+</html>
