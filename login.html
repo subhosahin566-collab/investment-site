@@ -1,38 +1,66 @@
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Adani Corporation</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #a58500; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .container { background: #fff; width: 400px; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); text-align: center; }
+    .top-bar { background: #FFD700; padding: 10px; text-align: right; border-radius: 10px 10px 0 0; }
+    .top-bar a { background: #0b2c56; color: #fff; padding: 8px 16px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #aaa; border-radius: 5px; }
+    .btn { width: 100%; padding: 12px; background: #0b2c56; color: #fff; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 15px; }
+    .btn:hover { background: #123d72; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-bar"><a href="register.html">Register</a></div>
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="phone" placeholder="Mobile phone number" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyA2q99EtNf7T0HJ5HQPDVipcy4JIiUXD7A",
-    authDomain: "investment-site-285a4.firebaseapp.com",
-    projectId: "investment-site-285a4",
-    storageBucket: "investment-site-285a4.firebasestorage.app",
-    messagingSenderId: "19188315569",
-    appId: "1:19188315569:web:8547c548146ea86fc43990",
-    measurementId: "G-XKFGPB15GS"
-  };
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyA2q99EtNf7T0HJ5HQPDVipcy4JIiUXD7A",
+      authDomain: "investment-site-285a4.firebaseapp.com",
+      projectId: "investment-site-285a4",
+      storageBucket: "investment-site-285a4.firebasestorage.app",
+      messagingSenderId: "19188315569",
+      appId: "1:19188315569:web:8547c548146ea86fc43990",
+      measurementId: "G-XKFGPB15GS"
+    };
 
-  document.getElementById("loginForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-    const phone = document.getElementById("phone").value;
-    const password = document.getElementById("password").value;
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    const userRef = doc(db, "users", phone);
-    const userSnap = await getDoc(userRef);
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const phone = document.getElementById("phone").value;
+      const password = document.getElementById("password").value;
+      const userRef = doc(db, "users", phone);
+      const userSnap = await getDoc(userRef);
 
-    if (userSnap.exists()) {
-      const userData = userSnap.data();
-      if (userData.password === password) {
-        alert("Login successful!");
-        window.location.href = "dashboard.html";
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        if (userData.password === password) {
+          alert("Login successful!");
+          window.location.href = "dashboard.html";
+        } else {
+          alert("Wrong password!");
+        }
       } else {
-        alert("Wrong password!");
+        alert("User not found. Please register.");
       }
-    } else {
-      alert("User not found. Please register.");
-    }
-  });
-</script>
+    });
+  </script>
+</body>
+</html>
