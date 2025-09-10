@@ -8,73 +8,130 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f9f9f9;
+      background-color: #a58500; /* golden background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    header {
-      background: #FFD700;
-      padding: 15px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 20px;
-    }
+
     .container {
+      background: #fff;
+      width: 400px;
       padding: 20px;
-      max-width: 400px;
-      margin: 50px auto;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .container h2 {
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       text-align: center;
-      margin-bottom: 20px;
     }
-    input {
-      width: 100%;
+
+    .top-bar {
+      background: #FFD700;
       padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      text-align: right;
+      border-radius: 10px 10px 0 0;
     }
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      background: #002B5B;
-      color: white;
-      text-align: center;
+
+    .top-bar a {
+      background: #0b2c56;
+      color: #fff;
+      padding: 8px 16px;
       text-decoration: none;
       border-radius: 5px;
-      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .logo {
+      margin: 20px 0;
+    }
+
+    .logo img {
+      max-width: 120px;
+    }
+
+    h2 {
+      margin: 10px 0 20px;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .input-group {
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: #0b2c56;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
       cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background: #123d72;
     }
   </style>
 </head>
 <body>
 
-  <header>Adani Corporation</header>
-
   <div class="container">
+    <div class="top-bar">
+      <a href="register.html">Register</a>
+    </div>
+
+    <div class="logo">
+      <img src="logo.png" alt="Company Logo">
+    </div>
+
     <h2>Login</h2>
-    <input type="text" id="username" placeholder="Enter Username">
-    <input type="password" id="password" placeholder="Enter Password">
-    <button class="btn" onclick="login()">Login</button>
+
+    <form id="loginForm">
+      <div class="input-group">
+        <label for="phone">Account</label>
+        <input type="text" id="phone" placeholder="Mobile phone number" required>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+
+      <button type="submit" class="btn">Login</button>
+    </form>
   </div>
 
   <script>
-    function login() {
-      const username = document.getElementById("username").value;
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const phone = document.getElementById("phone").value;
       const password = document.getElementById("password").value;
 
-      // Demo login (replace with backend later)
-      if (username === "admin" && password === "admin123") {
-        localStorage.setItem("loggedIn", "true");
+      // Demo login check
+      if(phone === "9999999999" && password === "admin123") {
         alert("Login successful!");
-        window.location.href = "mine.html";
+        window.location.href = "dashboard.html"; 
       } else {
-        alert("Invalid credentials!");
+        alert("Invalid phone or password");
       }
-    }
+    });
   </script>
 
 </body>
