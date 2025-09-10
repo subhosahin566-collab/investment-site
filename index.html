@@ -303,6 +303,18 @@
       event.target.classList.add("active");
     }
   </script>
+    
+  <!-- ✅ Logout functionality -->
+  <script>
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      localStorage.removeItem("loggedIn"); // clear login session
+      window.location.href = "login.html"; // redirect to login page
+    });
+  }
+  </script>
 
 </body>
 </html>
