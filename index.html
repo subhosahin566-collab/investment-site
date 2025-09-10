@@ -44,10 +44,73 @@
       border-radius: 2px;
     }
 
+    /* Sidebar menu */
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #002855;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .side-menu a {
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.2s;
+    }
+
+    .side-menu a:hover {
+      background-color: #FFD700;
+      color: black;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+    }
+
     /* Banner */
     .banner {
       width: 100%;
       height: auto;
+    }
+
+    /* Tabs for Primary / VIP / Purchased */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .tabs button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .tabs .active {
+      background-color: #FFD700;
+      color: black;
+    }
+
+    .tabs button:not(.active) {
+      background-color: #002855;
+      color: white;
     }
 
     /* Investment cards */
@@ -106,9 +169,18 @@
 </head>
 <body>
 
+  <!-- Sidebar -->
+  <div id="sideMenu" class="side-menu">
+    <span class="close-btn" onclick="closeMenu()">&times;</span>
+    <a href="index.html">Home</a>
+    <a href="recharge.html">Recharge</a>
+    <a href="refer.html">Refer</a>
+    <a href="mine.html">Mine</a>
+  </div>
+
   <!-- Top bar -->
   <div class="top-bar">
-    <div class="menu-btn">
+    <div class="menu-btn" onclick="openMenu()">
       <span></span>
       <span></span>
       <span></span>
@@ -118,6 +190,13 @@
 
   <!-- Banner -->
   <img src="banner.jpg" alt="Banner" class="banner">
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="active">Primary</button>
+    <button>VIP</button>
+    <button>Purchased</button>
+  </div>
 
   <!-- Investment Plans -->
   <div class="card">
@@ -151,6 +230,16 @@
     <a href="refer.html">Refer</a>
     <a href="mine.html">Mine</a>
   </div>
+
+  <script>
+    function openMenu() {
+      document.getElementById("sideMenu").style.width = "250px";
+    }
+
+    function closeMenu() {
+      document.getElementById("sideMenu").style.width = "0";
+    }
+  </script>
 
 </body>
 </html>
