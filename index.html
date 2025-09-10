@@ -3,78 +3,174 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adani Corporation</title>
+  <title>Adani Corporation - Investment Site</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
     }
+
+    /* Top yellow bar */
     .top-bar {
-      background-color: #f1c40f;
-      color: #000;
+      background-color: #FFD700;
+      color: black;
       padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       font-size: 18px;
       font-weight: bold;
-    }
-    .top-bar a {
-      background-color: #2c3e50;
-      color: #fff;
-      padding: 8px 16px;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-    .banner {
       text-align: center;
-      margin: 20px 0;
+      position: relative;
     }
-    .banner img {
-      max-width: 100%;
+
+    /* Hamburger button */
+    .menu-btn {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 25px;
+      height: 18px;
+    }
+
+    .menu-btn span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: black;
+      border-radius: 2px;
+    }
+
+    /* Sidebar menu */
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #002855;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .side-menu a {
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.2s;
+    }
+
+    .side-menu a:hover {
+      background-color: #FFD700;
+      color: black;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Banner */
+    .banner {
+      width: 100%;
       height: auto;
     }
-    .container {
-      padding: 20px;
+
+    /* Tabs for Primary / VIP / Purchased */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
     }
+
+    .tabs button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .tabs .active {
+      background-color: #FFD700;
+      color: black;
+    }
+
+    .tabs button:not(.active) {
+      background-color: #002855;
+      color: white;
+    }
+
+    /* Tab content */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Investment cards */
     .card {
-      background: #fff;
+      background: white;
+      margin: 15px;
       padding: 15px;
-      margin: 15px 0;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+
     .card h3 {
       margin: 0 0 10px;
+      color: #333;
     }
-    .btn {
+
+    .card p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .invest-btn {
       display: block;
       width: 100%;
-      padding: 10px;
-      background: #2c3e50;
-      color: #fff;
-      text-align: center;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
+      padding: 12px;
+      background-color: #002855;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 16px;
     }
-    .bottom-bar {
+
+    /* Bottom nav */
+    .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
-      right: 0;
-      background-color: #f1c40f;
+      width: 100%;
+      background-color: #FFD700;
       display: flex;
       justify-content: space-around;
       padding: 10px 0;
-      font-weight: bold;
+      border-top: 1px solid #ccc;
     }
-    .bottom-bar a {
+
+    .bottom-nav a {
       text-decoration: none;
-      color: #000;
+      color: black;
+      font-size: 14px;
       text-align: center;
       flex: 1;
     }
@@ -82,43 +178,122 @@
 </head>
 <body>
 
-  <!-- Top Bar -->
+  <!-- Sidebar -->
+  <div id="sideMenu" class="side-menu">
+    <span class="close-btn" onclick="closeMenu()">&times;</span>
+    <a href="index.html">Home</a>
+    <a href="recharge.html">Recharge</a>
+    <a href="refer.html">Refer</a>
+    <a href="mine.html">Mine</a>
+  </div>
+
+  <!-- Top bar -->
   <div class="top-bar">
-    <div>Adani Corporation</div>
-    <a href="login.html">Login</a>
+    <div class="menu-btn" onclick="openMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    Adani Corporation
   </div>
 
   <!-- Banner -->
-  <div class="banner">
-    <img src="banner.jpg" alt="Banner">
+  <img src="banner.jpg" alt="Banner" class="banner">
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="active" onclick="showTab('primary')">Primary</button>
+    <button onclick="showTab('vip')">VIP</button>
+    <button onclick="showTab('purchased')">Purchased</button>
   </div>
 
-  <!-- Content -->
-  <div class="container">
+  <!-- Primary Tab -->
+  <div id="primary" class="tab-content active">
     <div class="card">
-      <h3>Solar Panel</h3>
-      <p>Day Income: ₹50</p>
+      <h3>Mahindra Scorpio</h3>
+      <p>Day Income: ₹190</p>
+      <p>Income Days: 7 days</p>
+      <p>Invest Price: ₹300</p>
+      <button class="invest-btn">Invest Now</button>
+    </div>
+
+    <div class="card">
+      <h3>Tata Curve</h3>
+      <p>Day Income: ₹90</p>
       <p>Income Days: 30 days</p>
       <p>Invest Price: ₹250</p>
-      <a href="#" class="btn">Invest Now</a>
+      <button class="invest-btn">Invest Now</button>
+    </div>
+  </div>
+
+  <!-- VIP Tab -->
+  <div id="vip" class="tab-content">
+    <div class="card">
+      <h3>VIP Plan A</h3>
+      <p>Day Income: ₹500</p>
+      <p>Income Days: 15 days</p>
+      <p>Invest Price: ₹2000</p>
+      <button class="invest-btn">Invest Now</button>
     </div>
 
     <div class="card">
-      <h3>Tyres</h3>
-      <p>Day Income: ₹130</p>
+      <h3>VIP Plan B</h3>
+      <p>Day Income: ₹1200</p>
       <p>Income Days: 30 days</p>
-      <p>Invest Price: ₹400</p>
-      <a href="#" class="btn">Invest Now</a>
+      <p>Invest Price: ₹5000</p>
+      <button class="invest-btn">Invest Now</button>
     </div>
   </div>
 
-  <!-- Bottom Bar -->
-  <div class="bottom-bar">
+  <!-- Purchased Tab -->
+  <div id="purchased" class="tab-content">
+    <div class="card">
+      <h3>Purchased Plan 1</h3>
+      <p>Status: Active</p>
+      <p>Remaining Days: 10</p>
+      <p>Daily Income: ₹190</p>
+      <button class="invest-btn">View Details</button>
+    </div>
+
+    <div class="card">
+      <h3>Purchased Plan 2</h3>
+      <p>Status: Completed</p>
+      <p>Total Earned: ₹2700</p>
+      <button class="invest-btn">View Summary</button>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
     <a href="index.html">Home</a>
     <a href="recharge.html">Recharge</a>
-    <a href="team.html">Team</a>
+    <a href="refer.html">Refer</a>
     <a href="mine.html">Mine</a>
   </div>
+
+  <script>
+    function openMenu() {
+      document.getElementById("sideMenu").style.width = "250px";
+    }
+
+    function closeMenu() {
+      document.getElementById("sideMenu").style.width = "0";
+    }
+
+    function showTab(tabId) {
+      // Hide all tabs
+      var tabs = document.querySelectorAll(".tab-content");
+      tabs.forEach(tab => tab.classList.remove("active"));
+
+      // Show selected tab
+      document.getElementById(tabId).classList.add("active");
+
+      // Update button active state
+      var buttons = document.querySelectorAll(".tabs button");
+      buttons.forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+    }
+  </script>
 
 </body>
 </html>
