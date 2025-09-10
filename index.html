@@ -19,45 +19,35 @@
       font-size: 18px;
       font-weight: bold;
       text-align: center;
+      position: relative;
+    }
+
+    /* Hamburger button */
+    .menu-btn {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 25px;
+      height: 18px;
+    }
+
+    .menu-btn span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: black;
+      border-radius: 2px;
     }
 
     /* Banner */
     .banner {
       width: 100%;
       height: auto;
-    }
-
-    /* Tab buttons */
-    .tab-buttons {
-      display: flex;
-      justify-content: center;
-      margin: 15px 0;
-    }
-
-    .tab-buttons button {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      background-color: #f0f0f0;
-      border-radius: 4px;
-      margin: 0 5px;
-    }
-
-    .tab-buttons button.active {
-      background-color: #002855;
-      color: white;
-    }
-
-    /* Cards container */
-    .cards-container {
-      display: none;
-    }
-
-    .cards-container.active {
-      display: block;
     }
 
     /* Investment cards */
@@ -67,12 +57,6 @@
       padding: 15px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .card img {
-      max-width: 80px;
-      display: block;
-      margin-bottom: 10px;
     }
 
     .card h3 {
@@ -85,37 +69,17 @@
       color: #555;
     }
 
-    .invest-btn, .claim-btn {
+    .invest-btn {
       display: block;
       width: 100%;
       padding: 12px;
+      background-color: #002855;
+      color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       margin-top: 10px;
       font-size: 16px;
-    }
-
-    .invest-btn {
-      background-color: #002855;
-      color: white;
-    }
-
-    .claim-btn {
-      background-color: #002855;
-      color: white;
-    }
-
-    /* "Owned" tag */
-    .owned {
-      display: inline-block;
-      background: #FFD700;
-      color: black;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 8px;
     }
 
     /* Bottom nav */
@@ -143,101 +107,41 @@
 <body>
 
   <!-- Top bar -->
-  <div class="top-bar">Adani Corporation</div>
+  <div class="top-bar">
+    <div class="menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    Adani Corporation
+  </div>
 
   <!-- Banner -->
   <img src="banner.jpg" alt="Banner" class="banner">
 
-  <!-- Tab Buttons -->
-  <div class="tab-buttons">
-    <button class="active" onclick="showTab('primary')">Primary</button>
-    <button onclick="showTab('vip')">VIP</button>
-    <button onclick="showTab('purchased')">Purchased</button>
+  <!-- Investment Plans -->
+  <div class="card">
+    <h3>Mahindra Scorpio</h3>
+    <p>Day Income: ₹190</p>
+    <p>Income Days: 7 days</p>
+    <p>Invest Price: ₹300</p>
+    <button class="invest-btn">Invest Now</button>
   </div>
 
-  <!-- Primary Cards -->
-  <div id="primary" class="cards-container active">
-    <div class="card">
-      <h3>Mahindra Scorpio</h3>
-      <p>Day Income: ₹190</p>
-      <p>Income Days: 7 days</p>
-      <p>Invest Price: ₹300</p>
-      <button class="invest-btn">Invest Now</button>
-    </div>
-
-    <div class="card">
-      <h3>Tata Curve</h3>
-      <p>Day Income: ₹90</p>
-      <p>Income Days: 30 days</p>
-      <p>Invest Price: ₹250</p>
-      <button class="invest-btn">Invest Now</button>
-    </div>
-
-    <div class="card">
-      <h3>Tyres</h3>
-      <p>Day Income: ₹130</p>
-      <p>Income Days: 30 days</p>
-      <p>Invest Price: ₹400</p>
-      <button class="invest-btn">Invest Now</button>
-    </div>
+  <div class="card">
+    <h3>Tata Curve</h3>
+    <p>Day Income: ₹90</p>
+    <p>Income Days: 30 days</p>
+    <p>Invest Price: ₹250</p>
+    <button class="invest-btn">Invest Now</button>
   </div>
 
-  <!-- VIP Cards -->
-  <div id="vip" class="cards-container">
-    <div class="card">
-      <h3>Defender</h3>
-      <p>Day Income: ₹300</p>
-      <p>Income Days: 10 days</p>
-      <p>Invest Price: ₹600</p>
-      <button class="invest-btn">Invest Now</button>
-    </div>
-
-    <div class="card">
-      <h3>G 070B</h3>
-      <p>Day Income: ₹150</p>
-      <p>Income Days: 7 days</p>
-      <p>Invest Price: ₹1500</p>
-      <button class="invest-btn">Invest Now</button>
-    </div>
-
-    <div class="card">
-      <h3>Fortuner Legender</h3>
-      <p>Day Income: ₹500</p>
-      <p>Income Days: 15 days</p>
-      <p>Invest Price: ₹3000</p>
-      <button class="invest-btn">Invest Now</button>
-    </div>
-  </div>
-
-  <!-- Purchased Cards -->
-  <div id="purchased" class="cards-container">
-    <div class="card">
-      <img src="money.jpg" alt="Plan">
-      <span class="owned">Owned</span>
-      <h3>Per day 5% return</h3>
-      <button class="claim-btn">Claim Reward</button>
-    </div>
-
-    <div class="card">
-      <img src="bike.jpg" alt="Royal 4">
-      <span class="owned">Owned</span>
-      <h3>Royal 4</h3>
-      <button class="claim-btn">Claim Reward</button>
-    </div>
-
-    <div class="card">
-      <img src="tesla.jpg" alt="Tasla EV">
-      <span class="owned">Owned</span>
-      <h3>Tasla EV</h3>
-      <button class="claim-btn">Claim Reward</button>
-    </div>
-
-    <div class="card">
-      <img src="bonanza.jpg" alt="Big Bonanza">
-      <span class="owned">Owned</span>
-      <h3>Big Bonanza Plan</h3>
-      <button class="claim-btn">Claim Reward</button>
-    </div>
+  <div class="card">
+    <h3>Tyres</h3>
+    <p>Day Income: ₹130</p>
+    <p>Income Days: 30 days</p>
+    <p>Invest Price: ₹400</p>
+    <button class="invest-btn">Invest Now</button>
   </div>
 
   <!-- Bottom Navigation -->
@@ -247,17 +151,6 @@
     <a href="refer.html">Refer</a>
     <a href="mine.html">Mine</a>
   </div>
-
-  <!-- Tab Switch Script -->
-  <script>
-    function showTab(tabId) {
-      document.querySelectorAll('.cards-container').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.tab-buttons button').forEach(b => b.classList.remove('active'));
-
-      document.getElementById(tabId).classList.add('active');
-      event.target.classList.add('active');
-    }
-  </script>
 
 </body>
 </html>
