@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Adani Corporation</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #a58500; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .container { background: #fff; padding: 20px; width: 400px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); text-align: center; }
+    input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #aaa; border-radius: 5px; }
+    .btn { width: 100%; padding: 12px; margin-top: 10px; background: #0b2c56; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    .btn:hover { background: #123d72; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Register</h2>
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="text" id="phone" placeholder="+91XXXXXXXXXX" required>
+    <input type="password" id="password" placeholder="Set Password" required>
+    
+    <!-- Recaptcha -->
+    <div id="recaptcha-container"></div>
+
+    <button class="btn" onclick="sendOTP()">Send OTP</button>
+    <input type="text" id="otp" placeholder="Enter OTP">
+
+    <button class="btn" onclick="verifyAndRegister()">Verify & Register</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyA2q99EtNf7T0HJ5HQPDVipcy4JIiUXD7A",
+      authDomain: "investment-site-285a4.firebaseapp.com",
+      projectId: "investment-site-285a4",
+      storageBucket: "investment-site-285a4.firebasestorage.app",
+      messagingSenderId: "19188315569",
+      appId: "1:19188315569:web:8547c548146ea86fc43990",
+      measurementId: "G-XKFGPB15GS"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Send OTP
+    window.sendOTP = async function () {
+      const phone = document.getElementById("phone").value;
+
+      // Check if already registered
+      const userRef = doc(db, "users", phone);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        alert("This number is already registered. Please login.");
+        return;
+      }
+
+      const recaptcha = new RecaptchaVerifier(auth, 'recaptcha-container', { size: "normal" });
+      signInWithPhoneNumber(auth, phone, recaptcha)
+        .t
