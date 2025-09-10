@@ -17,15 +17,31 @@
       font-weight: bold;
       font-size: 20px;
     }
-    .container {
-      padding: 20px;
+    .banner {
+      width: 100%;
+      height: auto;
+    }
+    .tabs {
+      display: flex;
+      background: #fff;
+      border-bottom: 2px solid #ddd;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .tab.active {
+      background: #FFD700;
     }
     .card {
-      background: white;
+      background: #fff;
+      margin: 15px;
       padding: 15px;
-      margin-bottom: 15px;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     .card h3 {
       margin: 0 0 10px;
@@ -41,8 +57,7 @@
       border-radius: 5px;
       margin-top: 10px;
     }
-    /* Bottom Navbar */
-    .navbar {
+    .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
@@ -54,7 +69,7 @@
       font-weight: bold;
       text-align: center;
     }
-    .navbar a {
+    .bottom-nav a {
       flex: 1;
       text-decoration: none;
       color: black;
@@ -63,48 +78,51 @@
 </head>
 <body>
 
+  <!-- Top Bar -->
   <header>Adani Corporation</header>
 
-  <div class="container">
-    <div class="card">
-      <h3>Mahindra Scorpio</h3>
-      <p>Day Income: ₹190<br>Income Days: 7<br>Invest Price: ₹300</p>
-      <a href="#" class="btn">Invest Now</a>
-    </div>
+  <!-- Banner Section -->
+  <img src="banner.png" alt="Banner" class="banner">
 
-    <div class="card">
-      <h3>Tata Curve</h3>
-      <p>Day Income: ₹90<br>Income Days: 30<br>Invest Price: ₹250</p>
-      <a href="#" class="btn">Invest Now</a>
-    </div>
-
-    <div class="card">
-      <h3>Tyres</h3>
-      <p>Day Income: ₹130<br>Income Days: 30<br>Invest Price: ₹400</p>
-      <a href="#" class="btn">Invest Now</a>
-    </div>
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active">Primary</div>
+    <div class="tab">VIP</div>
+    <div class="tab">Purchased</div>
   </div>
 
-  <!-- Bottom Navbar -->
-  <div class="navbar">
+  <!-- Investment Plans -->
+  <div class="card">
+    <h3>Mahindra Scorpio</h3>
+    <p>Day Income: ₹190</p>
+    <p>Income Days: 7 days</p>
+    <p>Invest Price: ₹300</p>
+    <a href="#" class="btn">Invest Now</a>
+  </div>
+
+  <div class="card">
+    <h3>Tata Curve</h3>
+    <p>Day Income: ₹90</p>
+    <p>Income Days: 30 days</p>
+    <p>Invest Price: ₹250</p>
+    <a href="#" class="btn">Invest Now</a>
+  </div>
+
+  <div class="card">
+    <h3>Tyres</h3>
+    <p>Day Income: ₹130</p>
+    <p>Income Days: 30 days</p>
+    <p>Invest Price: ₹400</p>
+    <a href="#" class="btn">Invest Now</a>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
     <a href="index.html">Home</a>
     <a href="recharge.html">Recharge</a>
     <a href="refer.html">Refer</a>
-    <a href="#" id="mineBtn">Mine</a>
+    <a href="mine.html">Mine</a>
   </div>
-
-  <script>
-    // Check login status
-    let isLoggedIn = localStorage.getItem("loggedIn");
-
-    document.getElementById("mineBtn").addEventListener("click", function () {
-      if (isLoggedIn === "true") {
-        window.location.href = "mine.html"; // if logged in
-      } else {
-        window.location.href = "login.html"; // if not logged in
-      }
-    });
-  </script>
 
 </body>
 </html>
