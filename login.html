@@ -6,81 +6,133 @@
   <title>Login - Adani Corporation</title>
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      background-color: #a58500; /* golden background */
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
+
     .container {
       background: #fff;
-      padding: 25px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      width: 300px;
+      width: 400px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-align: center;
     }
-    h2 { text-align: center; }
-    input {
+
+    .top-bar {
+      background: #FFD700;
+      padding: 10px;
+      text-align: right;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .top-bar a {
+      background: #0b2c56;
+      color: #fff;
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .logo {
+      margin: 20px 0;
+    }
+
+    .logo img {
+      max-width: 120px;
+    }
+
+    h2 {
+      margin: 10px 0 20px;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .input-group {
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .input-group input {
       width: 100%;
       padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
     }
-    button {
+
+    .btn {
       width: 100%;
-      padding: 10px;
-      background: #002b5c;
+      padding: 12px;
+      background: #0b2c56;
       color: #fff;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
+      font-size: 16px;
       cursor: pointer;
+      margin-top: 15px;
     }
-    button:hover { background: #004080; }
-    p { text-align: center; }
-    a { color: #f9c513; font-weight: bold; text-decoration: none; }
+
+    .btn:hover {
+      background: #123d72;
+    }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <h2>Login / Signup</h2>
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <button onclick="login()">Login</button>
-    <button onclick="signup()">Signup</button>
-    <p><a href="index.html">⬅ Back to Home</a></p>
+    <div class="top-bar">
+      <a href="register.html">Register</a>
+    </div>
+
+    <div class="logo">
+      <img src="logo.png" alt="Company Logo">
+    </div>
+
+    <h2>Login</h2>
+
+    <form id="loginForm">
+      <div class="input-group">
+        <label for="phone">Account</label>
+        <input type="text" id="phone" placeholder="Mobile phone number" required>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+
+      <button type="submit" class="btn">Login</button>
+    </form>
   </div>
 
-  <!-- Firebase -->
-  <script type="module">
-    import { auth } from "./firebase.js";
-    import { createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-      from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-
-    // Signup
-    window.signup = function() {
-      const email = document.getElementById("email").value;
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const phone = document.getElementById("phone").value;
       const password = document.getElementById("password").value;
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-          alert("Signup successful ✅");
-          window.location.href = "index.html";
-        })
-        .catch(error => alert(error.message));
-    };
 
-    // Login
-    window.login = function() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      signInWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-          alert("Login successful 🎉");
-          window.location.href = "index.html";
-        })
-        .catch(error => alert(error.message));
-    };
+      // Demo login check
+      if(phone === "9999999999" && password === "admin123") {
+        alert("Login successful!");
+        window.location.href = "dashboard.html"; 
+      } else {
+        alert("Invalid phone or password");
+      }
+    });
   </script>
+
 </body>
 </html>
