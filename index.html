@@ -27,6 +27,30 @@
       height: auto;
     }
 
+    /* Tab buttons (Primary, VIP, Purchased) */
+    .tab-buttons {
+      display: flex;
+      justify-content: center;
+      margin: 15px 0;
+    }
+
+    .tab-buttons button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #f0f0f0;
+      border-radius: 4px;
+      margin: 0 5px;
+    }
+
+    .tab-buttons button.active {
+      background-color: #002855;
+      color: white;
+    }
+
     /* Investment cards */
     .card {
       background: white;
@@ -88,6 +112,13 @@
 
   <!-- Banner -->
   <img src="banner.jpg" alt="Banner" class="banner">
+
+  <!-- Tab Buttons -->
+  <div class="tab-buttons">
+    <button class="active">Primary</button>
+    <button>VIP</button>
+    <button>Purchased</button>
+  </div>
 
   <!-- Investment Plans -->
   <div class="card">
