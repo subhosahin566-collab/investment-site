@@ -1,190 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Adani Corporation</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #a58500; /* golden background */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    .container {
-      background: #fff;
-      width: 400px;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      text-align: center;
-    }
+  const firebaseConfig = {
+    apiKey: "AIzaSyA2q99EtNf7T0HJ5HQPDVipcy4JIiUXD7A",
+    authDomain: "investment-site-285a4.firebaseapp.com",
+    projectId: "investment-site-285a4",
+    storageBucket: "investment-site-285a4.firebasestorage.app",
+    messagingSenderId: "19188315569",
+    appId: "1:19188315569:web:8547c548146ea86fc43990",
+    measurementId: "G-XKFGPB15GS"
+  };
 
-    .top-bar {
-      background: #FFD700;
-      padding: 10px;
-      text-align: right;
-      border-radius: 10px 10px 0 0;
-    }
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    .top-bar a {
-      background: #0b2c56;
-      color: #fff;
-      padding: 8px 16px;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-    }
+  document.getElementById("loginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const phone = document.getElementById("phone").value;
+    const password = document.getElementById("password").value;
 
-    .logo {
-      margin: 20px 0;
-    }
+    const userRef = doc(db, "users", phone);
+    const userSnap = await getDoc(userRef);
 
-    .logo img {
-      max-width: 120px;
-    }
-
-    h2 {
-      margin: 10px 0 20px;
-      font-size: 20px;
-      color: #333;
-    }
-
-    .input-group {
-      margin: 15px 0;
-      text-align: left;
-    }
-
-    .input-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-      color: #333;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #aaa;
-      border-radius: 5px;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      background: #0b2c56;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 15px;
-    }
-
-    .btn:hover {
-      background: #123d72;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="container">
-    <div class="top-bar">
-      <a href="register.html">Register</a>
-    </div>
-
-    <div class="logo">
-      <img src="logo.png" alt="Company Logo">
-    </div>
-
-    <h2>Login with Phone</h2>
-
-    <!-- Phone Number Input -->
-    <div class="input-group">
-      <label for="phone">Mobile Number</label>
-      <input type="text" id="phone" placeholder="+91XXXXXXXXXX" required>
-    </div>
-
-    <!-- Recaptcha -->
-    <div id="recaptcha-container"></div>
-
-    <!-- OTP Buttons -->
-    <button class="btn" onclick="sendOTP()">Send OTP</button>
-
-    <div class="input-group">
-      <label for="otp">Enter OTP</label>
-      <input type="text" id="otp" placeholder="6-digit OTP">
-    </div>
-
-    <button class="btn" onclick="verifyOTP()">Verify OTP</button>
-  </div>
-
-  <!-- Firebase OTP Script -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } 
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, setDoc, serverTimestamp } 
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    // Your Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyA2q99EtNf7T0HJ5HQPDVipcy4JIiUXD7A",
-      authDomain: "investment-site-285a4.firebaseapp.com",
-      projectId: "investment-site-285a4",
-      storageBucket: "investment-site-285a4.firebasestorage.app",
-      messagingSenderId: "19188315569",
-      appId: "1:19188315569:web:8547c548146ea86fc43990",
-      measurementId: "G-XKFGPB15GS"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    // Step 1: Send OTP
-    window.sendOTP = function () {
-      const phoneNumber = document.getElementById("phone").value;
-      const recaptcha = new RecaptchaVerifier(auth, 'recaptcha-container', {
-        size: "normal"
-      });
-      signInWithPhoneNumber(auth, phoneNumber, recaptcha)
-        .then((confirmationResult) => {
-          window.confirmationResult = confirmationResult;
-          alert("OTP sent!");
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("Error sending OTP: " + error.message);
-        });
-    }
-
-    // Step 2: Verify OTP
-    window.verifyOTP = function () {
-      const otp = document.getElementById("otp").value;
-      window.confirmationResult.confirm(otp).then(async (result) => {
-        const user = result.user;
-
-        // Save user to Firestore (if not already)
-        await setDoc(doc(db, "users", user.uid), {
-          phone: user.phoneNumber,
-          role: "user",
-          balance: 0,
-          createdAt: serverTimestamp()
-        });
-
+    if (userSnap.exists()) {
+      const userData = userSnap.data();
+      if (userData.password === password) {
         alert("Login successful!");
-        window.location.href = "dashboard.html"; 
-      }).catch((error) => {
-        console.error(error);
-        alert("Invalid OTP: " + error.message);
-      });
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Wrong password!");
+      }
+    } else {
+      alert("User not found. Please register.");
     }
-  </script>
-
-</body>
-</html>
+  });
+</script>
