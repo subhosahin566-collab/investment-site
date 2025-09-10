@@ -1,534 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Adani Corporation / Adani Corporation</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adani Corporation</title>
   <style>
-    :root{
-      --yellow:#FFD700;
-      --navy:#002855;
-      --bg:#f8f9fa;
-      --card-bg:#ffffff;
-      --max-width:640px;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
     }
-
-    html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#222}
-
-    /* Top bar */
-    .top-bar{
-      background:var(--yellow);
-      position:relative;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:14px 48px;
-      box-shadow:0 1px 0 rgba(0,0,0,0.1);
+    .top-bar {
+      background-color: #f1c40f;
+      color: #000;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
     }
-    .site-title{font-weight:700;color:#000}
-    /* hamburger (three-bar) */
-    .menu-btn{
-      position:absolute;
-      left:14px;
-      top:50%;
-      transform:translateY(-50%);
-      width:34px;
-      height:26px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      border:0;
-      background:transparent;
-      cursor:pointer;
-      padding:0;
+    .top-bar a {
+      background-color: #2c3e50;
+      color: #fff;
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 14px;
     }
-    .menu-btn span{
-      display:block;
-      height:3px;
-      border-radius:2px;
-      background:#000;
+    .banner {
+      text-align: center;
+      margin: 20px 0;
     }
-
-    /* side menu */
-    .side-menu{
-      position:fixed;
-      left:0;
-      top:0;
-      height:100%;
-      width:0;               /* closed by default */
-      background:var(--navy);
-      overflow:hidden;
-      transition:width .28s ease;
-      z-index:1100;
-      color:#fff;
-      padding-top:62px;
-      box-sizing:border-box;
+    .banner img {
+      max-width: 100%;
+      height: auto;
     }
-    .side-menu a{
-      display:block;
-      padding:14px 20px;
-      color:#fff;
-      text-decoration:none;
-      font-size:16px;
+    .container {
+      padding: 20px;
     }
-    .side-menu a:hover{background:var(--yellow);color:#000}
-    .side-menu .close{
-      position:absolute;
-      right:12px;
-      top:10px;
-      font-size:28px;
-      cursor:pointer;
+    .card {
+      background: #fff;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    /* overlay to close menu on outside click */
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.25);
-      display:none;
-      z-index:1050;
+    .card h3 {
+      margin: 0 0 10px;
     }
-
-    /* container for page content (centers the narrow column like your screenshot) */
-    .container{
-      max-width:var(--max-width);
-      margin:0 auto;
-      padding:12px;
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: #2c3e50;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
     }
-
-    /* banner */
-    .banner{
-      width:100%;
-      height:160px;
-      overflow:hidden;
-      border-bottom:4px solid rgba(0,0,0,0.08);
-      background:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #f1c40f;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      font-weight: bold;
     }
-    .banner img{width:100%;height:100%;object-fit:cover;display:block}
-
-    /* page heading */
-    .heading{
-      margin:14px 0 8px;
-      font-size:20px;
-      font-weight:700;
-      color:var(--navy);
+    .bottom-bar a {
+      text-decoration: none;
+      color: #000;
+      text-align: center;
+      flex: 1;
     }
-
-    /* Tabs (Primary / VIP / Purchased) */
-    .tabs{
-      display:flex;
-      gap:8px;
-      margin-bottom:12px;
-    }
-    .tabs button{
-      flex:1;
-      border:0;
-      padding:10px 8px;
-      border-radius:8px;
-      font-weight:700;
-      cursor:pointer;
-      font-size:15px;
-      box-shadow:0 1px 0 rgba(0,0,0,0.05);
-    }
-    .tabs button.active{
-      background:var(--yellow);
-      color:#000;
-    }
-    .tabs button:not(.active){
-      background:var(--navy);
-      color:#fff;
-    }
-
-    /* Cards grid: two columns on desktop, one on small screens */
-    .cards-section{display:none}
-    .cards-section.active{display:block}
-    .cards-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:14px;
-      margin-bottom:88px; /* leave space for bottom nav */
-    }
-    @media (max-width:640px){
-      .cards-grid{grid-template-columns:1fr}
-      .top-bar{padding:12px 56px}
-    }
-
-    /* card */
-    .card{
-      background:var(--card-bg);
-      border-radius:10px;
-      padding:12px;
-      box-shadow:0 2px 6px rgba(0,0,0,0.06);
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-    }
-    .card .thumb{
-      width:72px;
-      height:56px;
-      border-radius:6px;
-      overflow:hidden;
-      flex-shrink:0;
-      background:#eee;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .card .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-
-    .card .info{flex:1}
-    .card h3{margin:0 0 6px;font-size:15px;color:#12222b}
-    .card p{margin:2px 0;font-size:13px;color:#444}
-    .price-badge{
-      display:inline-block;
-      background:var(--yellow);
-      color:#000;
-      padding:6px 10px;
-      border-radius:6px;
-      font-weight:700;
-      font-size:13px;
-      margin-top:6px;
-    }
-
-    .card .divider{height:1px;background:rgba(0,0,0,0.08);margin:10px 0;border-radius:2px}
-
-    .card .action{
-      margin-top:6px;
-    }
-    .btn{
-      display:inline-block;
-      width:100%;
-      padding:10px 12px;
-      border-radius:8px;
-      border:0;
-      cursor:pointer;
-      font-weight:700;
-      background:var(--navy);
-      color:#fff;
-    }
-
-    /* Purchased cards specifics */
-    .owned-badge{
-      display:inline-block;
-      background:var(--yellow);
-      color:#000;
-      font-size:12px;
-      padding:4px 6px;
-      border-radius:12px;
-      font-weight:700;
-      margin-bottom:8px;
-    }
-
-    /* bottom nav */
-    .bottom-nav{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:0;
-      height:60px;
-      background:var(--yellow);
-      box-shadow:0 -2px 6px rgba(0,0,0,0.08);
-      display:flex;
-      align-items:center;
-      justify-content:space-around;
-      z-index:100;
-    }
-    .bottom-nav a{color:#000;text-decoration:none;font-weight:700;font-size:13px}
-
-    /* small helper */
-    .muted{color:#666;font-size:13px}
   </style>
 </head>
 <body>
 
-  <!-- side menu and overlay -->
-  <div id="sideMenu" class="side-menu" aria-hidden="true">
-    <span id="sideClose" class="close" aria-label="Close menu">&times;</span>
-    <a href="index.html">Home</a>
-    <a href="recharge.html">Recharge</a>
-    <a href="refer.html">Refer</a>
-    <a href="mine.html">Mine</a>
-    <a href="contact.html">Contact</a>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div>Adani Corporation</div>
+    <a href="login.html">Login</a>
   </div>
-  <div id="overlay" class="overlay" tabindex="-1" aria-hidden="true"></div>
 
-  <!-- top bar with hamburger -->
-  <header class="top-bar">
-    <button id="menuToggle" class="menu-btn" aria-label="Open menu" title="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="site-title">Adani Corporation </div>
-  </header>
+  <!-- Banner -->
+  <div class="banner">
+    <img src="banner.jpg" alt="Banner">
+  </div>
 
-  <!-- main column -->
-  <main class="container" role="main">
-    <div class="banner" aria-hidden="true">
-      <!-- Replace banner.jpg with your actual banner image -->
-      <img src="banner.jpg" alt="Banner (replace banner.jpg in your folder)" onerror="this.style.background='#eee'; this.alt='Banner'"/>
+  <!-- Content -->
+  <div class="container">
+    <div class="card">
+      <h3>Solar Panel</h3>
+      <p>Day Income: ₹50</p>
+      <p>Income Days: 30 days</p>
+      <p>Invest Price: ₹250</p>
+      <a href="#" class="btn">Invest Now</a>
     </div>
 
-    <h2 class="heading">Adani Corporation</h2>
-
-    <!-- tabs -->
-    <div class="tabs" role="tablist" aria-label="Investment categories">
-      <button class="tab-btn active" role="tab" data-tab="primarySection" aria-selected="true">Primary</button>
-      <button class="tab-btn" role="tab" data-tab="vipSection" aria-selected="false">VIP</button>
-      <button class="tab-btn" role="tab" data-tab="purchasedSection" aria-selected="false">Purchased</button>
+    <div class="card">
+      <h3>Tyres</h3>
+      <p>Day Income: ₹130</p>
+      <p>Income Days: 30 days</p>
+      <p>Invest Price: ₹400</p>
+      <a href="#" class="btn">Invest Now</a>
     </div>
+  </div>
 
-    <!-- Primary cards -->
-    <section id="primarySection" class="cards-section active" aria-labelledby="Primary">
-      <div class="cards-grid">
-        <article class="card">
-          <div class="thumb"><img src="car1.jpg" alt="Mahindra scorpio" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <h3>Mahindra scorpio</h3>
-            <p class="muted">Day Income: ₹190</p>
-            <p class="muted">Income Days: 7 days</p>
-            <p class="muted">Total Revenue: ₹0</p>
-            <div class="price-badge">Invest Price: ₹300.00</div>
-            <div class="divider"></div>
-            <div class="action"><button class="btn invest">Invest Now</button></div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb"><img src="car2.jpg" alt="Tata curve" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <h3>Tata curve</h3>
-            <p class="muted">Day Income: ₹90</p>
-            <p class="muted">Income Days: 30 days</p>
-            <p class="muted">Total Revenue: ₹0</p>
-            <div class="price-badge">Invest Price: ₹250.00</div>
-            <div class="divider"></div>
-            <div class="action"><button class="btn invest">Invest Now</button></div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb"><img src="tyres.jpg" alt="Tyres" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <h3>Tyres</h3>
-            <p class="muted">Day Income: ₹130</p>
-            <p class="muted">Income Days: 30 days</p>
-            <p class="muted">Total Revenue: ₹0</p>
-            <div class="price-badge">Invest Price: ₹400.00</div>
-            <div class="divider"></div>
-            <div class="action"><button class="btn invest">Invest Now</button></div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb"><img src="cartubes.jpg" alt="Car tubes" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <h3>Car tubes</h3>
-            <p class="muted">Day Income: ₹110</p>
-            <p class="muted">Income Days: 30 days</p>
-            <p class="muted">Total Revenue: ₹0</p>
-            <div class="price-badge">Invest Price: ₹690.00</div>
-            <div class="divider"></div>
-            <div class="action"><button class="btn invest">Invest Now</button></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- VIP cards -->
-    <section id="vipSection" class="cards-section" aria-hidden="true">
-      <div class="cards-grid">
-        <article class="card">
-          <div class="thumb"><img src="defender.jpg" alt="Defender" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <h3>Defender</h3>
-            <p class="muted">Day Income: ₹300</p>
-            <p class="muted">Income Days: 10 days</p>
-            <div class="price-badge">Invest Price: ₹600.00</div>
-            <div class="divider"></div>
-            <div class="action"><button class="btn invest">Invest Now</button></div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb"><img src="g070b.jpg" alt="G 070B" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <h3>G 070B</h3>
-            <p class="muted">Day Income: ₹150</p>
-            <p class="muted">Income Days: 7 days</p>
-            <div class="price-badge">Invest Price: ₹1,500.00</div>
-            <div class="divider"></div>
-            <div class="action"><button class="btn invest">Invest Now</button></div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb"><img src="fortuner.jpg" alt="Fortuner" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <h3>Fortuner legender</h3>
-            <p class="muted">Day Income: ₹500</p>
-            <p class="muted">Income Days: 15 days</p>
-            <div class="price-badge">Invest Price: ₹3,000.00</div>
-            <div class="divider"></div>
-            <div class="action"><button class="btn invest">Invest Now</button></div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb"><img src="tata_truck.jpg" alt="Tata truck" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <h3>Tata truck</h3>
-            <p class="muted">Day Income: ₹1,000</p>
-            <p class="muted">Income Days: 24 days</p>
-            <div class="price-badge">Invest Price: ₹5,500.00</div>
-            <div class="divider"></div>
-            <div class="action"><button class="btn invest">Invest Now</button></div>
-          </div>
-        </article>
-
-        <!-- add more VIP cards here like your screenshot -->
-      </div>
-    </section>
-
-    <!-- Purchased cards -->
-    <section id="purchasedSection" class="cards-section" aria-hidden="true">
-      <div class="cards-grid">
-        <article class="card">
-          <div class="thumb"><img src="money.jpg" alt="Per day return" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <span class="owned-badge">Owned</span>
-            <h3>Per day 5% return</h3>
-            <p class="muted">Claimable reward available</p>
-            <div class="divider"></div>
-            <div class="action"><button class="btn claim">Claim Reward</button></div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb"><img src="bike.jpg" alt="Royal 4" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <span class="owned-badge">Owned</span>
-            <h3>Royal 4</h3>
-            <p class="muted">Next reward in 2 days</p>
-            <div class="divider"></div>
-            <div class="action"><button class="btn claim">Claim Reward</button></div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb"><img src="tesla.jpg" alt="Tesla EV" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&#39;http://www.w3.org/2000/svg&#39; width=&#39;400&#39; height=&#39;300&#39;><rect width=&#39;100%&#39; height=&#39;100%&#39; fill=&#39;%23eee&#39; /><text x=&#39;50%&#39; y=&#39;50%&#39; dominant-baseline=&#39;middle&#39; text-anchor=&#39;middle&#39; fill=&#39;%23666&#39; font-size=&#39;20&#39;>No image</text></svg>'"/></div>
-          <div class="info">
-            <span class="owned-badge">Owned</span>
-            <h3>Tesla EV</h3>
-            <p class="muted">Claim available</p>
-            <div class="divider"></div>
-            <div class="action"><button class="btn claim">Claim Reward</button></div>
-          </div>
-        </article>
-
-        <!-- add more purchased cards as needed -->
-      </div>
-    </section>
-
-  </main>
-
-  <!-- bottom nav -->
-  <nav class="bottom-nav" role="navigation" aria-label="Bottom navigation">
+  <!-- Bottom Bar -->
+  <div class="bottom-bar">
     <a href="index.html">Home</a>
     <a href="recharge.html">Recharge</a>
     <a href="team.html">Team</a>
     <a href="mine.html">Mine</a>
-  </nav>
+  </div>
 
-  <script>
-    (function(){
-      // Side menu open/close
-      const sideMenu = document.getElementById('sideMenu');
-      const overlay = document.getElementById('overlay');
-      const menuToggle = document.getElementById('menuToggle');
-      const sideClose = document.getElementById('sideClose');
-
-      function openMenu(){
-        sideMenu.style.width = '260px';
-        overlay.style.display = 'block';
-        sideMenu.setAttribute('aria-hidden','false');
-        overlay.setAttribute('aria-hidden','false');
-      }
-      function closeMenu(){
-        sideMenu.style.width = '0';
-        overlay.style.display = 'none';
-        sideMenu.setAttribute('aria-hidden','true');
-        overlay.setAttribute('aria-hidden','true');
-      }
-
-      menuToggle.addEventListener('click', openMenu);
-      sideClose.addEventListener('click', closeMenu);
-      overlay.addEventListener('click', closeMenu);
-
-      // Tabs functionality
-      const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
-      const sections = Array.from(document.querySelectorAll('.cards-section'));
-
-      function activateTab(button){
-        // deactivate all buttons and sections
-        tabButtons.forEach(b => {
-          b.classList.remove('active');
-          b.setAttribute('aria-selected','false');
-        });
-        sections.forEach(s => {
-          s.classList.remove('active');
-          s.setAttribute('aria-hidden','true');
-        });
-
-        // activate clicked
-        button.classList.add('active');
-        button.setAttribute('aria-selected','true');
-        const id = button.dataset.tab;
-        const target = document.getElementById(id);
-        if(target){
-          target.classList.add('active');
-          target.setAttribute('aria-hidden','false');
-        }
-      }
-
-      // attach events
-      tabButtons.forEach(btn => {
-        btn.addEventListener('click', function(){
-          activateTab(this);
-          // close side menu if open (optional)
-          closeMenu();
-        });
-      });
-
-      // keyboard navigation for tabs (left/right)
-      tabButtons.forEach((btn, idx) => {
-        btn.addEventListener('keydown', (e) => {
-          if(e.key === 'ArrowRight'){
-            const next = tabButtons[(idx+1) % tabButtons.length];
-            next.focus(); activateTab(next);
-          } else if(e.key === 'ArrowLeft'){
-            const prev = tabButtons[(idx-1 + tabButtons.length) % tabButtons.length];
-            prev.focus(); activateTab(prev);
-          }
-        });
-      });
-
-      // Demo handlers for invest/claim buttons (hook up your real logic)
-      document.body.addEventListener('click', function(e){
-        const target = e.target;
-        if(target.matches('.invest')){
-          alert('Invest flow — connect to your payment/recharge logic here.');
-        } else if(target.matches('.claim')){
-          alert('Claim reward — connect to your claim logic here.');
-        }
-      });
-
-      // ensure first tab active on load
-      (function init(){
-        const initialActive = document.querySelector('.tab-btn.active') || tabButtons[0];
-        activateTab(initialActive);
-      })();
-    })();
-  </script>
 </body>
 </html>
